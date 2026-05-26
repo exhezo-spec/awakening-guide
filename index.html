@@ -732,6 +732,92 @@
 
     .cta-guarantee { font-size: 0.8rem; color: var(--muted); margin-top: 1.5rem; }
 
+    /* ── 13 MOON PROMO ── */
+    #moon-promo {
+      background: linear-gradient(135deg, rgba(123,47,190,0.1) 0%, var(--bg2) 50%, rgba(123,47,190,0.06) 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #moon-promo::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(192,132,252,0.08) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .moon-promo-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .moon-promo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--purple3);
+      border: 1px solid rgba(192,132,252,0.4);
+      border-radius: 2rem;
+      padding: 0.3rem 1rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.9;
+    }
+    .moon-promo-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.4rem, 3.5vw, 2rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--moon, #d4c5f0) 0%, var(--purple3) 60%, var(--gold2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+    .moon-promo-sub {
+      font-size: clamp(0.88rem, 1.8vw, 1rem);
+      color: var(--muted);
+      max-width: 500px;
+      margin: 0 auto 2rem;
+      font-weight: 300;
+      line-height: 1.85;
+    }
+    .btn-moon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+      background: linear-gradient(135deg, var(--purple) 0%, var(--purple2) 55%, var(--purple3) 100%);
+      padding: 0.9rem 2.2rem;
+      border-radius: 3rem;
+      text-decoration: none;
+      font-weight: 700;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+      min-height: 48px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      box-shadow: 0 0 30px rgba(192,132,252,0.25);
+    }
+    .btn-moon:hover  { transform: scale(1.05); opacity: 0.94; }
+    .btn-moon:active { transform: scale(0.97); }
+    .moon-promo-price {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.75rem;
+      letter-spacing: 0.04em;
+    }
+
     /* ── FOOTER ── */
     footer {
       background: #020205;
@@ -1170,6 +1256,25 @@
       <p class="cta-guarantee reveal">
         🔒 Secure checkout via Gumroad &nbsp;·&nbsp; Instant PDF delivery &nbsp;·&nbsp; 7-day money-back guarantee
       </p>
+    </div>
+  </section>
+
+  <!-- ══════════ 13 MOON PROMO ══════════ -->
+  <section id="moon-promo" class="section">
+    <div class="container">
+      <div class="moon-promo-inner">
+        <span class="moon-promo-badge reveal">☽ &nbsp;New from Abstract Life</span>
+        <h2 class="moon-promo-title reveal">New: 13 Moon Calendar</h2>
+        <p class="moon-promo-sub reveal">
+          A symbolic calendar for people who feel disconnected from artificial time. 13 months. 28 days each. Daily lunar prompts and reflection pages — for just $2.22.
+        </p>
+        <div class="reveal">
+          <a href="/13-moon-calendar" class="btn-moon">
+            Explore the Calendar →
+          </a>
+        </div>
+        <p class="moon-promo-price reveal">Instant PDF Download · $2.22</p>
+      </div>
     </div>
   </section>
 
