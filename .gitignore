@@ -1,4 +1,6 @@
 .vercel
+.claude/
+screenshots/
 .DS_Store
 Thumbs.db
 *.local

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Gregorian Conversion Guide — 13 Moon Calendar · Abstract Life</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Raleway:wght@300;400;500;600&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#07050e;--bg2:#0d0a1c;--bg3:#130e24;
+  --purple:#7b2fbe;--purple2:#a855f7;--purple3:#c084fc;
+  --gold:#c9a84c;--gold2:#e8c96d;--gold3:#f5e6a3;
+  --moon:#d4c5f0;--moon2:#c0b3e8;--silver:#d2cce6;
+  --text:#f2edf9;--muted:#c0b8d8;--border:rgba(123,47,190,0.35);
+}
+html{background:#020105;}
+body{
+  font-family:'Raleway',sans-serif;font-weight:400;line-height:1.75;
+  color:var(--text);background:#020105;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact;
+}
+.notice{
+  position:fixed;top:0;left:0;right:0;z-index:9999;
+  background:rgba(123,47,190,0.92);color:#fff;text-align:center;
+  padding:8px 16px;font-size:13px;font-family:'Raleway',sans-serif;
+  letter-spacing:.04em;
+}
+@media print{.notice{display:none;}}
+
+/* ── PAGE SHELL ── */
+.page{
+  width:210mm;min-height:297mm;background:var(--bg);
+  position:relative;overflow:hidden;
+  margin:0 auto 4px;
+  page-break-after:always;break-after:page;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact;
+}
+.page::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(1px 1px at 8% 14%, rgba(255,255,255,.5) 0%,transparent 100%),
+    radial-gradient(1px 1px at 23% 71%, rgba(255,255,255,.35) 0%,transparent 100%),
+    radial-gradient(1px 1px at 46% 7%,  rgba(255,255,255,.45) 0%,transparent 100%),
+    radial-gradient(1px 1px at 67% 84%, rgba(255,255,255,.3)  0%,transparent 100%),
+    radial-gradient(1px 1px at 88% 29%, rgba(255,255,255,.5)  0%,transparent 100%),
+    radial-gradient(1px 1px at 12% 91%, rgba(200,180,255,.4)  0%,transparent 100%),
+    radial-gradient(1px 1px at 54% 47%, rgba(255,255,255,.25) 0%,transparent 100%),
+    radial-gradient(1px 1px at 78% 17%, rgba(200,180,255,.4)  0%,transparent 100%),
+    radial-gradient(1px 1px at 34% 54%, rgba(255,255,255,.3)  0%,transparent 100%),
+    radial-gradient(1px 1px at 91% 63%, rgba(200,180,255,.35) 0%,transparent 100%),
+    radial-gradient(1px 1px at 5%  39%, rgba(255,255,255,.4)  0%,transparent 100%),
+    radial-gradient(1px 1px at 61% 24%, rgba(255,255,255,.3)  0%,transparent 100%);
+}
+.pi{position:relative;z-index:1;padding:14mm 17mm 12mm;min-height:297mm;display:flex;flex-direction:column;}
+
+/* ── HEADER / FOOTER ── */
+.ph{display:flex;justify-content:space-between;align-items:center;padding-bottom:6mm;border-bottom:1px solid rgba(123,47,190,.22);margin-bottom:7mm;}
+.ph-brand{font-family:'Cinzel',serif;font-size:6.5pt;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);}
+.ph-title{font-family:'Cinzel',serif;font-size:6.5pt;letter-spacing:.18em;text-transform:uppercase;color:var(--purple3);opacity:.9;}
+.pf{margin-top:auto;padding-top:5mm;border-top:1px solid rgba(123,47,190,.15);display:flex;justify-content:space-between;align-items:center;}
+.pf-copy{font-family:'Cinzel',serif;font-size:5.5pt;color:rgba(192,180,216,.45);letter-spacing:.1em;}
+.pf-num{font-family:'Cinzel',serif;font-size:6pt;color:var(--purple3);opacity:.65;}
+.pc{flex:1;} /* page content */
+
+/* ── TYPE ── */
+h1,h2,h3,h4{font-family:'Cinzel',serif;line-height:1.2;}
+.lbl{
+  display:inline-block;font-family:'Cinzel',serif;font-size:6pt;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--purple3);
+  border:1px solid rgba(192,132,252,.45);border-radius:20mm;
+  padding:2mm 5.5mm;margin-bottom:4.5mm;opacity:.95;
+}
+.div{width:38mm;height:.35mm;background:linear-gradient(90deg,transparent,var(--purple3),transparent);margin:4mm auto;}
+.div-gold{width:38mm;height:.35mm;background:linear-gradient(90deg,transparent,var(--gold2),transparent);margin:4mm auto;}
+.body-text{font-size:10pt;line-height:2.0;color:var(--muted);font-weight:300;}
+.body-text p{margin-bottom:4.5mm;}
+.body-text strong{color:var(--text);font-weight:600;}
+.body-text em{color:var(--purple3);font-style:italic;}
+.gc{/* glass card */
+  background:rgba(255,255,255,.03);border:1px solid rgba(123,47,190,.3);
+  border-radius:3.5mm;padding:5.5mm;position:relative;overflow:hidden;
+}
+.gc::before{content:'';position:absolute;top:0;left:0;right:0;height:.4mm;background:linear-gradient(90deg,transparent,rgba(192,132,252,.45),transparent);}
+.section-h{font-family:'Cinzel',serif;font-size:16pt;font-weight:700;text-align:center;}
+.section-sub{font-size:9pt;color:var(--muted);text-align:center;max-width:140mm;margin:.5mm auto 0;font-weight:300;line-height:1.9;}
+.title-grad{background:linear-gradient(135deg,#fff 0%,var(--moon) 45%,var(--purple3) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+/* ══════════════════════════════ COVER ══════════════════════════════ */
+.cover-page{background:linear-gradient(155deg,#07050e 0%,#110820 45%,#07050e 100%)!important;}
+.cover-page::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:150mm;height:150mm;border-radius:50%;background:radial-gradient(ellipse,rgba(123,47,190,.2) 0%,rgba(192,132,252,.06) 40%,transparent 70%);pointer-events:none;z-index:1;}
+.ci{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:297mm;text-align:center;padding:18mm;}
+.c-brand{font-family:'Cinzel Decorative',serif;font-size:7.5pt;letter-spacing:.28em;color:var(--gold);margin-bottom:9mm;text-transform:uppercase;}
+.c-moon{font-size:20mm;line-height:1;margin-bottom:6mm;display:block;filter:drop-shadow(0 0 7mm rgba(192,132,252,.75));}
+.c-title{font-family:'Cinzel',serif;font-size:25pt;font-weight:900;background:linear-gradient(180deg,#fff 0%,var(--moon) 35%,var(--purple3) 68%,var(--gold2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.18;margin-bottom:4mm;letter-spacing:.05em;}
+.c-sub{font-family:'Cinzel',serif;font-size:9pt;letter-spacing:.18em;color:var(--moon2);text-transform:uppercase;margin-bottom:6mm;}
+.c-companion{font-size:7.5pt;letter-spacing:.16em;color:var(--muted);text-transform:uppercase;margin-bottom:11mm;font-family:'Cinzel',serif;}
+.c-stats{display:flex;gap:7mm;margin-bottom:12mm;justify-content:center;align-items:center;}
+.c-stat{text-align:center;}
+.c-stat-n{font-family:'Cinzel',serif;font-size:16pt;font-weight:900;color:var(--gold2);display:block;line-height:1;}
+.c-stat-l{font-size:5.6pt;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;}
+.c-sep{width:.3mm;height:10mm;background:rgba(123,47,190,.35);}
+.c-divline{width:46mm;height:.3mm;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 7mm;}
+.c-year{font-family:'Cinzel',serif;font-size:7pt;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;}
+
+/* ══════════════════════════════ CONVERSION TABLE ══════════════════════════════ */
+.ct{width:100%;border-collapse:collapse;margin-top:4mm;}
+.ct th{font-family:'Cinzel',serif;font-size:6.5pt;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;padding:2.6mm 3mm;border-bottom:1px solid rgba(123,47,190,.32);text-align:left;}
+.ct td{padding:2.5mm 3mm;border-bottom:1px solid rgba(123,47,190,.12);vertical-align:middle;}
+.ct tr:nth-child(even) td{background:rgba(255,255,255,.018);}
+.ct-num{font-family:'Cinzel',serif;font-size:9pt;font-weight:900;color:var(--gold2);width:14mm;}
+.ct-moon-sym{font-size:9pt;margin-right:1.5mm;}
+.ct-name{font-family:'Cinzel',serif;font-size:9pt;color:var(--purple3);font-weight:600;line-height:1.35;}
+.ct-range{font-size:8.5pt;color:var(--text);font-weight:500;letter-spacing:.02em;white-space:nowrap;}
+.ct-doot{background:rgba(201,168,76,.08)!important;}
+.ct-doot td{color:var(--gold3);}
+
+/* ══════════════════════════════ MONTH NAME REFERENCE ══════════════════════════════ */
+.mn-grid{display:grid;grid-template-columns:1fr 1fr;gap:3mm;margin-top:4mm;}
+.mn-card{display:flex;align-items:flex-start;gap:3.5mm;background:rgba(255,255,255,.025);border:1px solid rgba(123,47,190,.25);border-radius:3mm;padding:3.8mm 4mm;}
+.mn-sym{font-size:11pt;line-height:1.2;flex-shrink:0;filter:drop-shadow(0 0 2.5mm rgba(192,132,252,.45));}
+.mn-num{font-family:'Cinzel',serif;font-size:6pt;color:var(--gold);letter-spacing:.12em;display:block;margin-bottom:.8mm;text-transform:uppercase;}
+.mn-name{font-family:'Cinzel',serif;font-size:8.5pt;color:var(--purple3);font-weight:700;display:block;margin-bottom:1mm;line-height:1.25;}
+.mn-theme{font-size:6.8pt;color:var(--moon2);font-style:italic;line-height:1.55;}
+
+/* ══════════════════════════════ WORKED EXAMPLES ══════════════════════════════ */
+.ex-grid{display:grid;grid-template-columns:1fr 1fr;gap:3mm;margin-top:4mm;}
+.ex-card{display:flex;align-items:center;gap:3mm;background:rgba(255,255,255,.025);border:1px solid rgba(123,47,190,.25);border-radius:3mm;padding:3.8mm 4.2mm;}
+.ex-date{font-family:'Cinzel',serif;font-size:9pt;color:var(--text);font-weight:600;min-width:26mm;}
+.ex-arrow{color:var(--purple3);font-size:11pt;line-height:1;}
+.ex-result{font-family:'Cinzel',serif;font-size:8.5pt;color:var(--gold2);font-weight:700;line-height:1.3;}
+.ex-result span{display:block;font-size:6.2pt;color:var(--moon2);font-weight:400;letter-spacing:.04em;margin-top:.6mm;font-style:italic;}
+.ex-doot .ex-result{color:var(--purple3);}
+
+/* ══════════════════════════════ STEPS ══════════════════════════════ */
+.steps{display:flex;flex-direction:column;gap:3.5mm;margin-top:4mm;}
+.step{display:flex;gap:4mm;align-items:flex-start;background:rgba(255,255,255,.02);border:1px solid rgba(123,47,190,.2);border-radius:3mm;padding:4mm 5mm;}
+.step-n{font-family:'Cinzel',serif;font-size:13pt;font-weight:900;color:var(--gold2);line-height:1;flex-shrink:0;width:8mm;}
+.step-t{font-family:'Cinzel',serif;font-size:9.5pt;color:var(--purple3);font-weight:700;display:block;margin-bottom:1.5mm;}
+.step-d{font-size:8.5pt;color:var(--muted);line-height:1.75;font-weight:300;}
+.step-d strong{color:var(--text);font-weight:600;}
+
+/* ══════════════════════════════ CHEAT SHEET ══════════════════════════════ */
+.cs-table{width:100%;border-collapse:collapse;margin-top:3mm;}
+.cs-table td{padding:1.5mm 3mm;border-bottom:1px solid rgba(123,47,190,.12);font-size:7.5pt;}
+.cs-table tr:nth-child(even) td{background:rgba(255,255,255,.018);}
+.cs-mn{font-family:'Cinzel',serif;font-weight:900;color:var(--gold2);width:16mm;}
+.cs-name{font-family:'Cinzel',serif;color:var(--purple3);font-weight:600;}
+.cs-date{color:var(--text);font-weight:500;text-align:right;white-space:nowrap;}
+.cs-formula{background:rgba(123,47,190,.1);border:1px solid rgba(192,132,252,.3);border-radius:3.5mm;padding:4mm 6mm;margin-top:3mm;text-align:center;}
+.cs-formula .fl{font-family:'Cinzel',serif;font-size:6.5pt;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:2.5mm;}
+.cs-formula .ft{font-family:'Cinzel',serif;font-size:9.5pt;color:var(--moon);line-height:1.7;}
+.cs-formula .ft strong{color:var(--gold2);}
+
+/* ══════════════════════════════ FAQ ══════════════════════════════ */
+.faq{display:flex;flex-direction:column;gap:3.5mm;margin-top:4mm;}
+.faq-q{border:1px solid rgba(123,47,190,.25);border-radius:3.5mm;padding:4mm 5mm;background:rgba(255,255,255,.02);}
+.faq-qt{font-family:'Cinzel',serif;font-size:9pt;color:var(--purple3);font-weight:700;margin-bottom:2mm;display:flex;gap:2.5mm;line-height:1.4;}
+.faq-qn{color:var(--gold);flex-shrink:0;}
+.faq-a{font-size:8.5pt;color:var(--muted);line-height:1.8;font-weight:300;}
+.faq-a strong{color:var(--text);font-weight:600;}
+.faq-a em{color:var(--purple3);font-style:italic;}
+
+/* ══════════════════════════════ CALLOUT ══════════════════════════════ */
+.callout{background:rgba(123,47,190,.1);border-left:1.8mm solid var(--purple3);padding:4mm 5.5mm;border-radius:0 3mm 3mm 0;margin-top:4mm;}
+.callout p{font-size:8.5pt;color:var(--moon);font-style:italic;line-height:1.85;}
+.callout-gold{background:rgba(201,168,76,.07);border-left:1.8mm solid var(--gold2);}
+.callout-gold p{color:var(--gold3);}
+
+@media print{
+  body{background:var(--bg);-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .page{margin:0;page-break-after:always;break-after:page;}
+  @page{size:A4 portrait;margin:0;}
+}
+@media screen{
+  body{padding:5mm 0;}
+  .page{box-shadow:0 4px 30px rgba(0,0,0,.8);}
+}
+</style>
+</head>
+<body>
+
+<div class="notice">☽ &nbsp;To export as PDF: File → Print → Save as PDF → enable "Background graphics"&nbsp; ☽</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 1 — COVER
+════════════════════════════════════════════ -->
+<div class="page cover-page">
+<div class="ci">
+  <span class="c-brand">Abstract Life</span>
+  <span class="c-moon">☽</span>
+  <h1 class="c-title">Gregorian<br/>Conversion Guide</h1>
+  <p class="c-sub">Find Your Current Moon, Day &amp; Cycle</p>
+  <span class="c-companion">A Companion to the 13 Moon Calendar</span>
+  <div class="c-stats">
+    <div class="c-stat"><span class="c-stat-n">13</span><span class="c-stat-l">Moons</span></div>
+    <div class="c-sep"></div>
+    <div class="c-stat"><span class="c-stat-n">28</span><span class="c-stat-l">Days Each</span></div>
+    <div class="c-sep"></div>
+    <div class="c-stat"><span class="c-stat-n">Jul 26</span><span class="c-stat-l">Moon 1 · Day 1</span></div>
+  </div>
+  <div class="c-divline"></div>
+  <span class="c-year">A Digital PDF · Abstract Life · 2026</span>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 2 — INTRODUCTION
+════════════════════════════════════════════ -->
+<div class="page">
+<div class="pi">
+  <div class="ph"><span class="ph-brand">Abstract Life · 13 Moon Calendar</span><span class="ph-title">Introduction</span></div>
+  <div class="pc">
+    <span class="lbl">Why This Guide Exists</span>
+    <h2 class="section-h title-grad" style="font-size:15pt;text-align:left;margin-bottom:5mm;">Where Am I Right Now<br/>in the 13 Moons?</h2>
+    <div class="body-text">
+      <p>If you have spent any time with the <strong>13 Moon Calendar</strong>, one question tends to arrive quickly: <em>"Today is an ordinary calendar date — so which Moon am I actually in, and what day of that Moon is it?"</em></p>
+      <p>The original calendar was designed to be lived <strong>symbolically</strong> — as a rhythm you can begin at any moment, simply by calling your first day "Moon 1, Day 1." That freedom is intentional, and it remains completely valid.</p>
+      <p>But many readers asked for something more concrete: a simple, fixed way to line the 13 Moons up against the ordinary Gregorian dates on their phone, so they can glance at any date and instantly know where they stand.</p>
+      <p>This companion guide answers that request. It offers <strong>one clear alignment system</strong> — beginning each year on <em>July 26</em> — together with a full conversion table, worked examples, and a one-page cheat sheet. With it, any Gregorian date becomes easy to translate into a Moon and a Day.</p>
+      <p>Nothing here replaces or changes the original calendar. This is simply a <strong>practical bridge</strong> between two ways of counting time — the everyday and the lunar — so you can move between them without losing your place.</p>
+    </div>
+    <div class="callout"><p>You do not need to abandon your everyday calendar to live by the Moons. You only need a way to translate between them. That is all this guide is — a quiet translator.</p></div>
+  </div>
+  <div class="pf"><span class="pf-copy">© 2026 Abstract Life · abstractlife.co</span><span class="pf-num">2</span></div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 3 — HOW THE ALIGNMENT WORKS
+════════════════════════════════════════════ -->
+<div class="page">
+<div class="pi">
+  <div class="ph"><span class="ph-brand">Abstract Life · 13 Moon Calendar</span><span class="ph-title">The Alignment</span></div>
+  <div class="pc">
+    <span class="lbl">The Method, Step by Step</span>
+    <h2 class="section-h title-grad" style="font-size:15pt;text-align:left;margin-bottom:2mm;">How the Alignment Works</h2>
+    <div class="div" style="margin:3mm 0;"></div>
+    <div class="body-text" style="margin-bottom:1mm;">
+      <p>This guide uses a single, fixed anchor point. Once you know it, the whole year unfolds in a steady, predictable rhythm — every Moon exactly 28 days long.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="step-n">1</span>
+        <div><span class="step-t">July 26 = Moon 1, Day 1</span><span class="step-d">The year of Moons begins on <strong>July 26</strong>. This is the first day of the <strong>Moon of the Ember</strong> — the spark of the whole cycle.</span></div>
+      </div>
+      <div class="step">
+        <span class="step-n">2</span>
+        <div><span class="step-t">Every 28 Days, a New Moon Begins</span><span class="step-d">Each Moon lasts exactly <strong>28 days</strong> — four perfect weeks. When one Moon completes on its 28th day, the next Moon begins the very next day on its own Day 1. There are no uneven months here.</span></div>
+      </div>
+      <div class="step">
+        <span class="step-n">3</span>
+        <div><span class="step-t">July 25 = The Day Out of Time</span><span class="step-d">Thirteen Moons of 28 days total 364 days. The 365th day — <strong>July 25</strong>, the day before the cycle restarts — is the <em>Day Out of Time</em>: a day belonging to no Moon, reserved for rest, reflection, and simply being.</span></div>
+      </div>
+      <div class="step">
+        <span class="step-n">4</span>
+        <div><span class="step-t">Or Begin From Moon 1, Day 1 — Today</span><span class="step-d">You are never required to use the July 26 dates. If you prefer, <strong>call today your Moon 1, Day 1</strong> and let the rhythm flow from there. The July 26 system is a shared reference point; the symbolic start is a personal one. Both are correct.</span></div>
+      </div>
+    </div>
+    <div class="callout-gold callout"><p>13 Moons × 28 Days = 364 days, + 1 Day Out of Time = a complete 365-day year. The structure never drifts — only the lens changes.</p></div>
+  </div>
+  <div class="pf"><span class="pf-copy">© 2026 Abstract Life · abstractlife.co</span><span class="pf-num">3</span></div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 4 — FULL CONVERSION TABLE
+════════════════════════════════════════════ -->
+<div class="page">
+<div class="pi">
+  <div class="ph"><span class="ph-brand">Abstract Life · 13 Moon Calendar</span><span class="ph-title">Conversion Table</span></div>
+  <div class="pc">
+    <span class="lbl">The Master Reference</span>
+    <h2 class="section-h title-grad" style="font-size:15pt;text-align:left;margin-bottom:2mm;">Full Conversion Table</h2>
+    <p style="font-size:8.5pt;color:var(--muted);font-style:italic;margin-bottom:1mm;">Each Moon spans exactly 28 days. Find today's Gregorian date in the range, and you have found your Moon.</p>
+    <table class="ct">
+      <thead>
+        <tr><th style="width:14mm;">Moon</th><th>Moon Name</th><th style="text-align:right;">Gregorian Date Range</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="ct-num">1</td><td><span class="ct-moon-sym">🔥</span><span class="ct-name">Moon of the Ember</span></td><td class="ct-range" style="text-align:right;">Jul 26 – Aug 22</td></tr>
+        <tr><td class="ct-num">2</td><td><span class="ct-moon-sym">🌬️</span><span class="ct-name">Moon of the Breath</span></td><td class="ct-range" style="text-align:right;">Aug 23 – Sep 19</td></tr>
+        <tr><td class="ct-num">3</td><td><span class="ct-moon-sym">🌊</span><span class="ct-name">Moon of the Deep Well</span></td><td class="ct-range" style="text-align:right;">Sep 20 – Oct 17</td></tr>
+        <tr><td class="ct-num">4</td><td><span class="ct-moon-sym">🌿</span><span class="ct-name">Moon of the Unfolding Leaf</span></td><td class="ct-range" style="text-align:right;">Oct 18 – Nov 14</td></tr>
+        <tr><td class="ct-num">5</td><td><span class="ct-moon-sym">🐍</span><span class="ct-name">Moon of the Serpent's Coil</span></td><td class="ct-range" style="text-align:right;">Nov 15 – Dec 12</td></tr>
+        <tr><td class="ct-num">6</td><td><span class="ct-moon-sym">🪞</span><span class="ct-name">Moon of the Mirror Lake</span></td><td class="ct-range" style="text-align:right;">Dec 13 – Jan 9</td></tr>
+        <tr><td class="ct-num">7</td><td><span class="ct-moon-sym">⛈️</span><span class="ct-name">Moon of the Storm</span></td><td class="ct-range" style="text-align:right;">Jan 10 – Feb 6</td></tr>
+        <tr><td class="ct-num">8</td><td><span class="ct-moon-sym">☀️</span><span class="ct-name">Moon of the Golden Sun</span></td><td class="ct-range" style="text-align:right;">Feb 7 – Mar 6</td></tr>
+        <tr><td class="ct-num">9</td><td><span class="ct-moon-sym">🌊</span><span class="ct-name">Moon of the Silver River</span></td><td class="ct-range" style="text-align:right;">Mar 7 – Apr 3</td></tr>
+        <tr><td class="ct-num">10</td><td><span class="ct-moon-sym">💜</span><span class="ct-name">Moon of the Open Heart</span></td><td class="ct-range" style="text-align:right;">Apr 4 – May 1</td></tr>
+        <tr><td class="ct-num">11</td><td><span class="ct-moon-sym">🃏</span><span class="ct-name">Moon of the Trickster</span></td><td class="ct-range" style="text-align:right;">May 2 – May 29</td></tr>
+        <tr><td class="ct-num">12</td><td><span class="ct-moon-sym">🦉</span><span class="ct-name">Moon of the Wise Elder</span></td><td class="ct-range" style="text-align:right;">May 30 – Jun 26</td></tr>
+        <tr><td class="ct-num">13</td><td><span class="ct-moon-sym">✨</span><span class="ct-name">Moon of the Infinite Sky</span></td><td class="ct-range" style="text-align:right;">Jun 27 – Jul 24</td></tr>
+        <tr class="ct-doot"><td class="ct-num" style="color:var(--gold3);">✦</td><td><span class="ct-moon-sym">☽</span><span class="ct-name" style="color:var(--gold3);">Day Out of Time</span></td><td class="ct-range" style="text-align:right;color:var(--gold3);">July 25</td></tr>
+      </tbody>
+    </table>
+    <div class="callout"><p>To find your <strong>Day</strong> within a Moon: count from the Moon's start date as Day 1. For example, the Moon of the Ember begins July 26 (Day 1), so August 1 is Day 7, and August 22 is Day 28 — the final day.</p></div>
+  </div>
+  <div class="pf"><span class="pf-copy">© 2026 Abstract Life · abstractlife.co</span><span class="pf-num">4</span></div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 5 — MONTH NAME REFERENCE
+════════════════════════════════════════════ -->
+<div class="page">
+<div class="pi">
+  <div class="ph"><span class="ph-brand">Abstract Life · 13 Moon Calendar</span><span class="ph-title">Moon Names</span></div>
+  <div class="pc">
+    <span class="lbl">The Thirteen Moons</span>
+    <h2 class="section-h title-grad" style="font-size:15pt;text-align:left;margin-bottom:2mm;">Moon Name Reference</h2>
+    <p style="font-size:8.5pt;color:var(--muted);font-style:italic;margin-bottom:1mm;">The same thirteen Moons from your 13 Moon Calendar, each with its guiding theme.</p>
+    <div class="mn-grid">
+      <div class="mn-card"><span class="mn-sym">🔥</span><div><span class="mn-num">Moon 1 · Magnetic</span><span class="mn-name">Moon of the Ember</span><span class="mn-theme">Initiation · Awakening · New Fire</span></div></div>
+      <div class="mn-card"><span class="mn-sym">🌬️</span><div><span class="mn-num">Moon 2 · Lunar</span><span class="mn-name">Moon of the Breath</span><span class="mn-theme">Voice · Dream · Communication</span></div></div>
+      <div class="mn-card"><span class="mn-sym">🌊</span><div><span class="mn-num">Moon 3 · Electric</span><span class="mn-name">Moon of the Deep Well</span><span class="mn-theme">Mystery · Depth · Roots</span></div></div>
+      <div class="mn-card"><span class="mn-sym">🌿</span><div><span class="mn-num">Moon 4 · Self-Existing</span><span class="mn-name">Moon of the Unfolding Leaf</span><span class="mn-theme">Growth · Form · Structure</span></div></div>
+      <div class="mn-card"><span class="mn-sym">🐍</span><div><span class="mn-num">Moon 5 · Overtone</span><span class="mn-name">Moon of the Serpent's Coil</span><span class="mn-theme">Vitality · Instinct · Life Force</span></div></div>
+      <div class="mn-card"><span class="mn-sym">🪞</span><div><span class="mn-num">Moon 6 · Rhythmic</span><span class="mn-name">Moon of the Mirror Lake</span><span class="mn-theme">Clarity · Truth · Balance</span></div></div>
+      <div class="mn-card"><span class="mn-sym">⛈️</span><div><span class="mn-num">Moon 7 · Resonant</span><span class="mn-name">Moon of the Storm</span><span class="mn-theme">Transformation · Catalyst · Change</span></div></div>
+      <div class="mn-card"><span class="mn-sym">☀️</span><div><span class="mn-num">Moon 8 · Galactic</span><span class="mn-name">Moon of the Golden Sun</span><span class="mn-theme">Radiance · Wholeness · Integrity</span></div></div>
+      <div class="mn-card"><span class="mn-sym">🌊</span><div><span class="mn-num">Moon 9 · Solar</span><span class="mn-name">Moon of the Silver River</span><span class="mn-theme">Flow · Purification · Movement</span></div></div>
+      <div class="mn-card"><span class="mn-sym">💜</span><div><span class="mn-num">Moon 10 · Planetary</span><span class="mn-name">Moon of the Open Heart</span><span class="mn-theme">Love · Compassion · Connection</span></div></div>
+      <div class="mn-card"><span class="mn-sym">🃏</span><div><span class="mn-num">Moon 11 · Spectral</span><span class="mn-name">Moon of the Trickster</span><span class="mn-theme">Play · Liberation · Release</span></div></div>
+      <div class="mn-card"><span class="mn-sym">🦉</span><div><span class="mn-num">Moon 12 · Crystal</span><span class="mn-name">Moon of the Wise Elder</span><span class="mn-theme">Wisdom · Memory · Lineage</span></div></div>
+    </div>
+    <div class="mn-card" style="margin-top:3mm;"><span class="mn-sym">✨</span><div><span class="mn-num">Moon 13 · Cosmic</span><span class="mn-name">Moon of the Infinite Sky</span><span class="mn-theme">Completion · Presence · Mystery — the closing of the full cycle before the Day Out of Time and a new beginning.</span></div></div>
+  </div>
+  <div class="pf"><span class="pf-copy">© 2026 Abstract Life · abstractlife.co</span><span class="pf-num">5</span></div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 6 — WORKED EXAMPLES
+════════════════════════════════════════════ -->
+<div class="page">
+<div class="pi">
+  <div class="ph"><span class="ph-brand">Abstract Life · 13 Moon Calendar</span><span class="ph-title">Worked Examples</span></div>
+  <div class="pc">
+    <span class="lbl">See It in Practice</span>
+    <h2 class="section-h title-grad" style="font-size:15pt;text-align:left;margin-bottom:2mm;">Worked Examples</h2>
+    <p style="font-size:8.5pt;color:var(--muted);font-style:italic;margin-bottom:1mm;">A Gregorian date on the left; its Moon and Day on the right. Count from each Moon's start date as Day 1.</p>
+    <div class="ex-grid">
+      <div class="ex-card"><span class="ex-date">July 26</span><span class="ex-arrow">→</span><span class="ex-result">Moon 1 · Day 1<span>Moon of the Ember — first day</span></span></div>
+      <div class="ex-card"><span class="ex-date">August 10</span><span class="ex-arrow">→</span><span class="ex-result">Moon 1 · Day 16<span>Moon of the Ember</span></span></div>
+      <div class="ex-card"><span class="ex-date">August 22</span><span class="ex-arrow">→</span><span class="ex-result">Moon 1 · Day 28<span>Moon of the Ember — last day</span></span></div>
+      <div class="ex-card"><span class="ex-date">August 23</span><span class="ex-arrow">→</span><span class="ex-result">Moon 2 · Day 1<span>Moon of the Breath</span></span></div>
+      <div class="ex-card"><span class="ex-date">September 1</span><span class="ex-arrow">→</span><span class="ex-result">Moon 2 · Day 10<span>Moon of the Breath</span></span></div>
+      <div class="ex-card"><span class="ex-date">September 20</span><span class="ex-arrow">→</span><span class="ex-result">Moon 3 · Day 1<span>Moon of the Deep Well</span></span></div>
+      <div class="ex-card"><span class="ex-date">October 31</span><span class="ex-arrow">→</span><span class="ex-result">Moon 4 · Day 14<span>Moon of the Unfolding Leaf</span></span></div>
+      <div class="ex-card"><span class="ex-date">November 15</span><span class="ex-arrow">→</span><span class="ex-result">Moon 5 · Day 1<span>Moon of the Serpent's Coil</span></span></div>
+      <div class="ex-card"><span class="ex-date">December 25</span><span class="ex-arrow">→</span><span class="ex-result">Moon 6 · Day 13<span>Moon of the Mirror Lake</span></span></div>
+      <div class="ex-card"><span class="ex-date">January 1</span><span class="ex-arrow">→</span><span class="ex-result">Moon 6 · Day 20<span>Moon of the Mirror Lake</span></span></div>
+      <div class="ex-card"><span class="ex-date">February 14</span><span class="ex-arrow">→</span><span class="ex-result">Moon 8 · Day 8<span>Moon of the Golden Sun</span></span></div>
+      <div class="ex-card"><span class="ex-date">March 20</span><span class="ex-arrow">→</span><span class="ex-result">Moon 9 · Day 14<span>Moon of the Silver River</span></span></div>
+      <div class="ex-card"><span class="ex-date">April 4</span><span class="ex-arrow">→</span><span class="ex-result">Moon 10 · Day 1<span>Moon of the Open Heart</span></span></div>
+      <div class="ex-card"><span class="ex-date">May 29</span><span class="ex-arrow">→</span><span class="ex-result">Moon 11 · Day 28<span>Moon of the Trickster — last day</span></span></div>
+      <div class="ex-card"><span class="ex-date">June 21</span><span class="ex-arrow">→</span><span class="ex-result">Moon 12 · Day 23<span>Moon of the Wise Elder</span></span></div>
+      <div class="ex-card"><span class="ex-date">July 4</span><span class="ex-arrow">→</span><span class="ex-result">Moon 13 · Day 8<span>Moon of the Infinite Sky</span></span></div>
+      <div class="ex-card ex-doot"><span class="ex-date">July 25</span><span class="ex-arrow">→</span><span class="ex-result">Day Out of Time<span>belongs to no Moon</span></span></div>
+      <div class="ex-card ex-doot"><span class="ex-date">July 24</span><span class="ex-arrow">→</span><span class="ex-result">Moon 13 · Day 28<span>final day before the cycle restarts</span></span></div>
+    </div>
+    <div class="callout"><p>Tip: once you locate your Moon's start date, your Day number is simply how many days have passed since then, counting that start date itself as Day 1.</p></div>
+  </div>
+  <div class="pf"><span class="pf-copy">© 2026 Abstract Life · abstractlife.co</span><span class="pf-num">6</span></div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 7 — QUICK REFERENCE / CHEAT SHEET
+════════════════════════════════════════════ -->
+<div class="page">
+<div class="pi">
+  <div class="ph"><span class="ph-brand">Abstract Life · 13 Moon Calendar</span><span class="ph-title">Quick Reference</span></div>
+  <div class="pc">
+    <span class="lbl">One-Page Cheat Sheet</span>
+    <h2 class="section-h title-grad" style="font-size:15pt;text-align:left;margin-bottom:2mm;">Quick Reference Page</h2>
+    <p style="font-size:8.5pt;color:var(--muted);font-style:italic;margin-bottom:2mm;">Everything you need at a glance. Each Moon's start date is its Day 1.</p>
+    <div class="gc" style="padding:3mm 5mm;">
+      <table class="cs-table">
+        <tr><td class="cs-mn">Moon 1</td><td class="cs-name">🔥 Moon of the Ember</td><td class="cs-date">starts Jul 26</td></tr>
+        <tr><td class="cs-mn">Moon 2</td><td class="cs-name">🌬️ Moon of the Breath</td><td class="cs-date">starts Aug 23</td></tr>
+        <tr><td class="cs-mn">Moon 3</td><td class="cs-name">🌊 Moon of the Deep Well</td><td class="cs-date">starts Sep 20</td></tr>
+        <tr><td class="cs-mn">Moon 4</td><td class="cs-name">🌿 Moon of the Unfolding Leaf</td><td class="cs-date">starts Oct 18</td></tr>
+        <tr><td class="cs-mn">Moon 5</td><td class="cs-name">🐍 Moon of the Serpent's Coil</td><td class="cs-date">starts Nov 15</td></tr>
+        <tr><td class="cs-mn">Moon 6</td><td class="cs-name">🪞 Moon of the Mirror Lake</td><td class="cs-date">starts Dec 13</td></tr>
+        <tr><td class="cs-mn">Moon 7</td><td class="cs-name">⛈️ Moon of the Storm</td><td class="cs-date">starts Jan 10</td></tr>
+        <tr><td class="cs-mn">Moon 8</td><td class="cs-name">☀️ Moon of the Golden Sun</td><td class="cs-date">starts Feb 7</td></tr>
+        <tr><td class="cs-mn">Moon 9</td><td class="cs-name">🌊 Moon of the Silver River</td><td class="cs-date">starts Mar 7</td></tr>
+        <tr><td class="cs-mn">Moon 10</td><td class="cs-name">💜 Moon of the Open Heart</td><td class="cs-date">starts Apr 4</td></tr>
+        <tr><td class="cs-mn">Moon 11</td><td class="cs-name">🃏 Moon of the Trickster</td><td class="cs-date">starts May 2</td></tr>
+        <tr><td class="cs-mn">Moon 12</td><td class="cs-name">🦉 Moon of the Wise Elder</td><td class="cs-date">starts May 30</td></tr>
+        <tr><td class="cs-mn">Moon 13</td><td class="cs-name">✨ Moon of the Infinite Sky</td><td class="cs-date">starts Jun 27</td></tr>
+        <tr><td class="cs-mn" style="color:var(--gold3);">✦</td><td class="cs-name" style="color:var(--gold3);">☽ Day Out of Time</td><td class="cs-date" style="color:var(--gold3);">July 25</td></tr>
+      </table>
+    </div>
+    <div class="cs-formula">
+      <span class="fl">The Two-Step Formula</span>
+      <p class="ft"><strong>1.</strong> Find which date range today falls in &nbsp;→&nbsp; that is your <strong>Moon</strong>.<br/><strong>2.</strong> Count from that Moon's start date (= Day 1) &nbsp;→&nbsp; that is your <strong>Day</strong>.</p>
+    </div>
+  </div>
+  <div class="pf"><span class="pf-copy">© 2026 Abstract Life · abstractlife.co</span><span class="pf-num">7</span></div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 8 — FAQ
+════════════════════════════════════════════ -->
+<div class="page">
+<div class="pi">
+  <div class="ph"><span class="ph-brand">Abstract Life · 13 Moon Calendar</span><span class="ph-title">Questions</span></div>
+  <div class="pc">
+    <span class="lbl">Common Questions</span>
+    <h2 class="section-h title-grad" style="font-size:15pt;text-align:left;margin-bottom:4mm;">Frequently Asked</h2>
+    <div class="faq">
+      <div class="faq-q">
+        <p class="faq-qt"><span class="faq-qn">Q.</span> How do I find my current Moon?</p>
+        <p class="faq-a">Look at today's ordinary calendar date and find which range it falls into on the <strong>Full Conversion Table</strong> (page 4) or the <strong>Quick Reference</strong> (page 7). That range tells you your Moon. Then count from that Moon's start date — counting the start date as Day 1 — to find your Day.</p>
+      </div>
+      <div class="faq-q">
+        <p class="faq-qt"><span class="faq-qn">Q.</span> What is the Day Out of Time?</p>
+        <p class="faq-a">Thirteen Moons of 28 days each add up to 364 days. A full year has 365. The single remaining day — <strong>July 25</strong>, the day before the cycle begins again — is the <em>Day Out of Time</em>. It belongs to no Moon and carries no count. It is a day for rest, reflection, gratitude, and simply being — exactly as described in your 13 Moon Calendar.</p>
+      </div>
+      <div class="faq-q">
+        <p class="faq-qt"><span class="faq-qn">Q.</span> Do I have to follow the Gregorian dates?</p>
+        <p class="faq-a">No. The July 26 alignment is offered as a <strong>shared reference point</strong> — useful if you want everyone working from the same dates, or if you simply like the structure. But it is entirely optional. The Moons can be lived purely symbolically.</p>
+      </div>
+      <div class="faq-q">
+        <p class="faq-qt"><span class="faq-qn">Q.</span> Can I start from Moon 1, Day 1 instead?</p>
+        <p class="faq-a">Yes — and many people prefer this. Simply declare <strong>today</strong> to be Moon 1, Day 1, and let each Moon run 28 days from there. This is the original spirit of the calendar: a rhythm you can begin in any moment. Use whichever approach feels more alive to you.</p>
+      </div>
+      <div class="faq-q">
+        <p class="faq-qt"><span class="faq-qn">Q.</span> Is this symbolic or official?</p>
+        <p class="faq-a">It is <strong>symbolic</strong>. The July 26 alignment is a practical, reflective convention — not a scientific, historical, or officially adopted calendar. It exists to help you connect the 13 Moons with everyday dates, nothing more. <em>(In leap years, February 29 is simply treated as an uncounted day so the dates above stay aligned — July 26 always remains Moon 1, Day 1.)</em></p>
+      </div>
+    </div>
+  </div>
+  <div class="pf"><span class="pf-copy">© 2026 Abstract Life · abstractlife.co</span><span class="pf-num">8</span></div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 9 — DISCLAIMER / CLOSING
+════════════════════════════════════════════ -->
+<div class="page" style="background:linear-gradient(160deg,#07050e 0%,#110c22 50%,#07050e 100%)!important;">
+<div class="pi">
+  <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:255mm;padding:10mm;">
+    <span class="lbl">A Note Before You Begin</span>
+    <span style="font-size:16mm;display:block;margin:4mm 0;filter:drop-shadow(0 0 7mm rgba(192,132,252,.75));">☽</span>
+    <h2 style="font-family:'Cinzel',serif;font-size:18pt;font-weight:900;background:linear-gradient(180deg,#fff 0%,var(--moon) 40%,var(--purple3) 78%,var(--gold2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4mm;line-height:1.2;">A Symbolic Bridge,<br/>Not a Replacement</h2>
+    <div class="div-gold" style="margin:3mm auto 6mm;"></div>
+    <div style="max-width:130mm;">
+      <p style="font-size:9.5pt;color:var(--muted);line-height:2.0;font-weight:300;margin-bottom:6mm;">This guide uses a symbolic <strong style="color:var(--text);">July 26 alignment system</strong> to help users connect the 13 Moon Calendar with conventional dates. It is intended as a <em style="color:var(--purple3);font-style:italic;">reflective and spiritual tool</em> and is not presented as a scientific, historical, or official calendar replacement.</p>
+    </div>
+    <div style="width:128mm;border:1px solid rgba(123,47,190,.25);border-radius:4mm;padding:6mm 7mm;background:rgba(255,255,255,.015);margin-bottom:6mm;">
+      <p style="font-size:8.5pt;color:rgba(192,176,216,.85);line-height:1.9;font-style:italic;">Various cultures throughout history have followed lunar and 13-month calendars. This companion draws on that contemplative spirit while making no specific historical claim. The July 26 start date is offered as one consistent, practical reference among many possible ones — use it as a lens, never a doctrine. Continue to rely on your everyday calendar for all practical, civic, and scheduling needs.</p>
+    </div>
+    <p style="font-size:7.5pt;color:var(--purple3);font-family:'Cinzel',serif;letter-spacing:.1em;font-style:italic;max-width:120mm;line-height:1.7;">"The calendar does not ask you to keep up. It asks you to keep returning."</p>
+    <span class="clos-sig" style="margin-top:7mm;font-family:'Cinzel Decorative',serif;font-size:8pt;color:var(--gold);letter-spacing:.12em;">Abstract Life · 2026</span>
+  </div>
+  <div class="pf" style="position:absolute;bottom:12mm;left:15mm;right:15mm;"><span class="pf-copy">© 2026 Abstract Life · abstractlife.co</span><span class="pf-num">9</span></div>
+</div>
+</div>
+
+</body>
+</html>
